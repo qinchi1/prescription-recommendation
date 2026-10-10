@@ -1,0 +1,120 @@
+from copy import deepcopy
+
+STUDENT_CONFIGURATION = {
+    "formal_seed": 7319,
+    "student": {
+        "hidden_dim": 128,
+        "herb_embedding_dim": 128,
+        "property_embedding_dim": 64,
+        "frequency_embedding_dim": 16,
+        "num_heads": 4,
+        "num_set_layers": 3,
+        "dropout": 0.1,
+        "max_candidate_logit_residual": 0.5,
+        "bounded_candidate_residual": True,
+    },
+    "training": {
+        "batch_size": 256,
+        "evaluation_batch_size": 512,
+        "learning_rate": 0.0001,
+        "weight_decay": 1e-05,
+        "max_epochs": 30,
+        "early_stopping_patience": 5,
+        "gradient_clip_norm": 1.0,
+        "checkpoint_metric": "F1@10",
+        "checkpoint_partition": "validation",
+        "minimum_delta": 1e-06,
+        "torch_num_threads": 16,
+    },
+    "loss": {
+        "hard_select": 1.0,
+        "listwise": 0.4,
+        "boundary": 0.15,
+        "mhm_kd": 0.2,
+        "tcm_kd": 0.1,
+        "gated_teacher_total": 0.3,
+        "syndrome_fraction": 0.5,
+        "treatment_fraction": 0.5,
+        "mhm_temperature": 2.0,
+        "tcm_temperature": 2.0,
+    },
+    "gate": {
+        "input_features": [
+            "symptom_support_coverage",
+            "has_supported_symptom",
+            "syndrome_confidence",
+            "treatment_confidence",
+            "mhm_confidence",
+        ],
+        "hidden_dim": 16,
+        "balance_regularizer": 0.0,
+    },
+}
+
+
+def student_configuration():
+    return deepcopy(STUDENT_CONFIGURATION)
+
+
+CANDIDATE_CONFIGURATION = {
+    "epochs": 80,
+    "batch_size": 256,
+    "lr": 0.0002,
+    "weight_decay": 0.0001,
+    "hidden_dim": 256,
+    "num_layers": 2,
+    "num_heads": 4,
+    "dropout": 0.3,
+    "seed": 42,
+    "use_jpa": True,
+    "use_23d": True,
+    "use_kg": True,
+    "patience": 15,
+}
+MASKED_HERB_CONFIGURATION = {
+    "seed": 42,
+    "hidden_dim": 128,
+    "embedding_dim": 128,
+    "num_heads": 4,
+    "num_set_layers": 2,
+    "dropout": 0.1,
+    "batch_size": 128,
+    "learning_rate": 0.0003,
+    "weight_decay": 1e-05,
+    "max_epochs": 80,
+    "early_stopping_patience": 12,
+    "gradient_clip_norm": 1.0,
+    "lambda_rank": 0.3,
+    "ranking_margin": 0.2,
+    "positive_weight_cap": 8.0,
+    "negative_weight": 0.05,
+    "eval_batch_size": 128,
+}
+CLINICAL_CONFIGURATION = {
+    "seed_list": [42, 52, 62],
+    "folds": 5,
+    "model": {
+        "input_dim": 390,
+        "encoder_hidden_dim": 256,
+        "hidden_dim": 128,
+        "intermediate_dim": 64,
+        "syndrome_dim": 50,
+        "treatment_dim": 61,
+        "dropout": 0.1,
+    },
+    "training": {
+        "batch_size": 64,
+        "max_epochs": 50,
+        "patience": 8,
+        "optimizer": "AdamW",
+        "learning_rate": 0.001,
+        "weight_decay": 0.0001,
+        "gradient_clip_norm": 5.0,
+        "pos_weight_min": 1.0,
+        "pos_weight_max": 20.0,
+        "lambda_herb": 1.0,
+        "lambda_syndrome": 0.3,
+        "lambda_treatment": 0.3,
+        "early_stopping_metric": "Herb F1@10",
+    },
+}
