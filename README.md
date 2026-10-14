@@ -1,21 +1,22 @@
-# Herbal Prescription Recommendation
+<h1 align="center">Herbal Prescription Recommendation</h1>
+
+<p align="center">
+  <strong>Graph-based Candidate Generation &middot; Dual-teacher Distillation &middot; Set-based Reranking</strong>
+</p>
 
 Research implementation for symptom-based herbal set recommendation. The model takes a multi-hot symptom vector from a fixed vocabulary, generates herb candidates, and reranks the candidate set with a student model trained through dual-teacher distillation.
 
-```text
-390-dimensional symptom input
-              |
-     Graph candidate model
-              |
-    Scores over 811 herbs
-              |
-       Top-50 candidates
-              |
-      Set-based reranking
-              ^
-    Distillation during training
-  Masked-herb teacher + Syndrome/treatment-principle teacher
-```
+<p align="center">
+  <a href="assets/figures/framework.png">
+    <img src="assets/figures/framework.png" alt="Framework overview showing data and knowledge graph construction, graph-based herb candidate generation, coverage-aware dual-teacher distillation, and student set reranking." width="1200">
+  </a>
+</p>
+
+<p align="center">
+  <sub><strong>Figure 1.</strong> Overview of the framework: (A) data and knowledge graph construction; (B) graph-based candidate generation; (C) coverage-aware dual-teacher distillation during training; and (D) student reranking and Top-K herb set prediction.</sub>
+</p>
+
+---
 
 The output consists of herb IDs and ranking scores. The model does not generate dosages, and this release does not provide evidence of clinical efficacy or clinical prescription review.
 
